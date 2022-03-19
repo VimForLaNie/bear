@@ -1,24 +1,6 @@
 import { useState, FC } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter} from 'next/router';
-
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDi_NUH440we0phFtuHg7xOJAAblp9ot1I",
-  authDomain: "glowing-anagram-344508.firebaseapp.com",
-  projectId: "glowing-anagram-344508",
-  storageBucket: "glowing-anagram-344508.appspot.com",
-  messagingSenderId: "157287566102",
-  appId: "1:157287566102:web:a8a9e8f137103477e71e37"
-};
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth();
+import { fireAuth } from 'utils/firebase';
 
 const Login:FC = () => {
     const [Email, setEmail] = useState("");
@@ -28,7 +10,7 @@ const Login:FC = () => {
 
     const register = () => {
         if(Password == cPassword){
-            createUserWithEmailAndPassword(auth, Email, Password)
+            fireAuth.createUserWithEmailAndPassword(Email, Password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 
