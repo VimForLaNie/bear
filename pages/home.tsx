@@ -8,3 +8,5 @@ const page:NextPage = () => {
         </div>
     )
 }
+
+export default page;
