@@ -1,8 +1,8 @@
 import { useState, FC } from "react";
-import { useRouter} from 'next/router';
-import { fireAuth } from 'utils/firebase';
+import { useRouter } from 'next/router';
+import { fireAuth, fireStore } from 'utils/firebase';
 
-const Login:FC = () => {
+const Register:FC = () => {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [cPassword, setCPassword] = useState("");
@@ -13,11 +13,12 @@ const Login:FC = () => {
             fireAuth.createUserWithEmailAndPassword(Email, Password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                
+                // fireStore.collection('user').doc(user?.uid).set({
+                //     //Data
+                //     "wallets" : [{"name": "Cash", "value" : 0, "transactions" : [] }],
+                // });
                 // Make sure we're in the browser
-                if (typeof window !== 'undefined') {
-                  router.push('/');
-                }
+                router.push('/');
                 console.log("yes");
             })
             .catch((error) => {
@@ -40,4 +41,4 @@ const Login:FC = () => {
     )
 }
 
-export default Login;
+export default Register;
