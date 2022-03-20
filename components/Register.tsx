@@ -15,7 +15,8 @@ const Register:FC = () => {
                 const user = userCredential.user;
                 fireStore.collection('user').doc(user?.uid).set({
                     //Data
-                    "wallets" : [{"name": "Cash", "value" : 0, "transactions" : [] }],
+                    "value" : 0, 
+                    "transactions" : [],
                 });
                 // Make sure we're in the browser
                 router.push('/');
