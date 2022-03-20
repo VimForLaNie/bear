@@ -1,32 +1,42 @@
-import type { NextPage, GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
-import { fireAuth, fireStore } from 'utils/firebase';
-import { useState, useEffect } from 'react';
-// import { useState } from 'react';
+import type { NextPage } from 'next';
+import { fireAuth } from 'utils/firebase';
+import { useState } from 'react';
+import Link from 'next/link';
 
 const user = fireAuth.currentUser;
 
 const Home: NextPage = (props) => {
-  const router = useRouter();
   const [Data, setData] = useState({});
+  const [Auth, setAuth] = useState(true);
+  const [Uid, setUid] = useState("");
 
   const get = async () => {
-    const res = await fetch('/api/hello');
+    const res = await fetch(`/api/get/${Uid}`);
     const data = await res.json();
     setData(data);
   }
   
-  if(user){
-    return(
+  fireAuth.onAuthStateChanged((user) => {
+    if(user){
+      setAuth(true);
+      setUid(user.uid);
+    }
+    else{
+      setAuth(false);
+      setUid("");
+    }
+  });
+
+  if(Auth){
+    return ( 
       <div>
         data : {JSON.stringify(Data)}
         <input type="button" value="Add" onClick={get}></input>
-      </div>
-    )
+      </div> 
+    );
   }
   else{
-    // typeof window !== 'undefined' && router.push('/login');
-    return (<></>)
+    return <Link href="/login">Go to Login</Link>
   }
 }
 

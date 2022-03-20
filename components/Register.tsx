@@ -13,10 +13,10 @@ const Register:FC = () => {
             fireAuth.createUserWithEmailAndPassword(Email, Password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                // fireStore.collection('user').doc(user?.uid).set({
-                //     //Data
-                //     "wallets" : [{"name": "Cash", "value" : 0, "transactions" : [] }],
-                // });
+                fireStore.collection('user').doc(user?.uid).set({
+                    //Data
+                    "wallets" : [{"name": "Cash", "value" : 0, "transactions" : [] }],
+                });
                 // Make sure we're in the browser
                 router.push('/');
                 console.log("yes");
