@@ -53,6 +53,10 @@ const Home: NextPage = (props) => {
     setIndex(1); //reset 
   }
 
+  const logOut = () => {
+    fireAuth.signOut();
+  } 
+
   if(Auth){ 
     return ( 
       <>
@@ -77,6 +81,7 @@ const Home: NextPage = (props) => {
             })
           }
         </div>
+        <input type="button" value="logout" onClick={logOut}></input>
       </> 
     );
   }
