@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const Home: NextPage = (props) => {
-  const [Auth, setAuth] = useState(true);
+  const [Auth, setAuth] = useState(false);
   const [Uid, setUid] = useState("");
   const [data, setData] = useState<any>();
   const [amount, setAmount] = useState("");
-  const [Index, setIndex] = useState(0);
+  const [Index, setIndex] = useState(1);
 
   useEffect(() => {
    const set = async () => {
@@ -39,15 +39,18 @@ const Home: NextPage = (props) => {
 
   const rmTransaction = async () => {
     let temp = data?.transactions;
-    console.log(temp);
+    let change = 0;
+  
     if(!temp) { console.log("fuck"); return; }
-    if(Index !== NaN && Index > -1) temp.splice(Index - 1, 1)
-    // setData(temp);
+    
+    if(Index !== NaN && Index > -1) change = -temp.splice(Index - 1, 1);
+
     fireStore.collection('user').doc(String(Uid)).update({
+      value : data?.value + change,
       transactions : temp,
     }).then(() => console.log("yay"));
-
-    setIndex(0); //reset 
+    
+    setIndex(1); //reset 
   }
 
   if(Auth){ 
@@ -59,18 +62,19 @@ const Home: NextPage = (props) => {
           <input 
             type="number" 
             id="index" 
-            min="0" max={data?.transactions.length - 1}
+            min="1" max={data?.transactions.length}
             placeholder='which one to remove' 
             value={Index} 
             onChange={e => setIndex(parseInt(e.currentTarget.value))}>
           </input>
           <input type="button" value="Send" onClick={rmTransaction}/>
         </div>
+        <h1>{data?.value}</h1>
         <div>
           {
             data?.transactions.map((e:number,i:number)=>{
               return <p key={i}>{e}</p>
-            }).reverse()
+            })
           }
         </div>
       </> 
