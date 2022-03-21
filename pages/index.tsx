@@ -6,16 +6,18 @@ import Link from 'next/link';
 const Home: NextPage = (props) => {
   const [Auth, setAuth] = useState(false);
   const [Uid, setUid] = useState("");
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any>([]);
   const [amount, setAmount] = useState("");
   const [Index, setIndex] = useState(1);
 
+  const db = fireStore.collection('user');
+
   useEffect(() => {
    const set = async () => {
-     setData((await fireStore.collection('user').doc(String(Uid)).get()).data())
+     setData((await db.doc(String(Uid)).get()).data()?.wallets)
    }
    if(Uid) set();
-  },[Uid,data]);
+  },[Uid,db]);
 
   fireAuth.onAuthStateChanged((user) => {
     if(user){
@@ -29,33 +31,37 @@ const Home: NextPage = (props) => {
   });
   
   const addTransaction = async () => {
-    fireStore.collection('user').doc(String(Uid)).update({
-      value : parseInt(data?.value) + parseInt(String(amount)),
-      transactions : [...(data?.transactions || []),amount],
+    const Cash = data[0];
+    Cash.value += parseInt(String(amount));
+    Cash.transactions = [...Cash.transactions, amount]; 
+    setData([Cash]); //need fix
+    db.doc(String(Uid)).update({
+      wallets : data,
     }).then(() => console.log("yes"));
 
     setAmount(""); //reset
   }
 
   const rmTransaction = async () => {
-    let temp = data?.transactions;
+    const Cash = data[0];
+
+    let temp = Cash.transactions;
     let change = 0;
   
-    if(!temp) { console.log("fuck"); return; }
+    if(!temp) { console.log("no"); return; }
     
-    if(Index !== NaN && Index > -1) change = -temp.splice(Index - 1, 1);
+    if(Index > -1) change = -temp.splice(Index - 1, 1);
 
-    fireStore.collection('user').doc(String(Uid)).update({
-      value : data?.value + change,
-      transactions : temp,
+    Cash.transactions = temp;
+    Cash.value += change;
+
+    setData([Cash]);
+    db.doc(String(Uid)).update({
+      wallets : data,
     }).then(() => console.log("yay"));
     
     setIndex(1); //reset 
   }
-
-  const logOut = () => {
-    fireAuth.signOut();
-  } 
 
   if(Auth){ 
     return ( 
@@ -66,22 +72,22 @@ const Home: NextPage = (props) => {
           <input 
             type="number" 
             id="index" 
-            min="1" max={data?.transactions.length}
+            min="1" max={data[0]?.transactions.length}
             placeholder='which one to remove' 
             value={Index} 
             onChange={e => setIndex(parseInt(e.currentTarget.value))}>
           </input>
           <input type="button" value="Send" onClick={rmTransaction}/>
         </div>
-        <h1>{data?.value}</h1>
+        <h1>{data[0]?.value}</h1>
         <div>
           {
-            data?.transactions.map((e:number,i:number)=>{
+            data[0]?.transactions.map((e:number,i:number)=>{
               return <p key={i}>{e}</p>
             })
           }
         </div>
-        <input type="button" value="logout" onClick={logOut}></input>
+        <input type="button" value="logout" onClick={() => fireAuth.signOut()}></input>
       </> 
     );
   }
