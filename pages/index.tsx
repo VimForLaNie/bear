@@ -20,7 +20,8 @@ const Home: NextPage = (props) => {
   const [data, setData] = useState<wallet[]>([{name : "", value : 0, transactions : [{to : "", amount : 0, date : ""}]}]);
   const [amount, setAmount] = useState("");
   const [Index, setIndex] = useState(0);
-  const [Names, setNames] = useState<string[]>();
+  const [Names, setNames] = useState<string[]>([""]);
+  const [Add, setAdd] = useState("");
   const [Rm, setRm] = useState(1);
 
   const db = fireStore.collection('user');
@@ -47,66 +48,77 @@ const Home: NextPage = (props) => {
   });
   
   const addTransaction = async () => {
-    const Cash = data[0];
-    Cash.value += parseInt(String(amount));
-    let temp:transaction = { to : "Cash", amount : parseInt(String(amount)), date: String(new Date()) };
-    Cash.transactions = [...Cash.transactions, temp]; 
-    setData([Cash]); //need fix
+    let t_data = data;
+
+    t_data[Index].value += parseInt(String(amount));
+    let temp:transaction = { to : Names[Index], amount : parseInt(String(amount)), date: String(new Date()) };
+    t_data[Index].transactions.push(temp); 
+
+    setData(t_data); 
     db.doc(String(Uid)).update({
-      wallets : data,
+      wallets : t_data,
     }).then(() => console.log("yes"));
 
     setAmount(""); //reset
   }
 
   const rmTransaction = async () => {
-    const Cash = data[0];
-
-    let temp = Cash.transactions;
-    let change = 0;
+    let t_data = data; 
   
-    if(!temp) { console.log("no"); return; }
-    
-    if(Rm > -1) change = -temp.splice(Rm - 1, 1);
+    if(!t_data[Index].transactions.length) { console.log("no"); return; }
+    t_data[Index].value -= (t_data[Index].transactions.splice(Rm - 1, 1))[0].amount;;
 
-    Cash.transactions = temp;
-    Cash.value += change;
-
-    setData([Cash]);
+    setData(t_data);
     db.doc(String(Uid)).update({
-      wallets : data,
+      wallets : t_data,
     }).then(() => console.log("yay"));
     
     setRm(1); //reset 
+  }
+
+  const addWallet = () => {
+    db.doc(String(Uid)).update({
+      wallets : [...data, { name : Add,value : 0,transactions : [],}]
+    }).then(() => {console.log("added")});
+
+    setData([...data, { name : Add,value : 0,transactions : [],}]);
   }
 
   if(Auth){ 
     return ( 
       <>
         <div> 
-          <input type="text" id="amount" placeholder='amount' value={amount} onChange={e => setAmount(e.currentTarget.value)}></input>
+          <select name="name" id="name">
+            {Names?.map((e,i) => {
+              return <option key={i} value={i}>{e}</option>
+            })}
+          </select>
+          <input type="text" id="amount" placeholder='amount' value={amount} onChange={e => setAmount(e.currentTarget.value)}/>
           <input type="button" value="Submit" onClick={addTransaction}/>
           <input 
             type="number" 
             id="index" 
-            min="1" max={data[0]?.transactions.length}
+            min="1" max={data[Index].transactions.length}
             placeholder='which one to remove' 
             value={Rm} 
-            onChange={e => setRm(parseInt(e.currentTarget.value))}>
-          </input>
+            onChange={e => setRm(parseInt(e.currentTarget.value))}/>
           <input type="button" value="Send" onClick={rmTransaction}/>
         </div>
-        <h1>{data[0]?.value}</h1>
+        <h1>{data[Index]?.value}</h1>
         <div>
           {
-            data[0]?.transactions.map((e:transaction,i:number)=>{
+            data[Index]?.transactions.map((e:transaction,i:number)=>{
               return <div key={i}>
-                <p>to : {e.to}</p> <p> for : {e.amount}</p> <p> @{e.date}</p> <br></br>
+                <p>to : {e.to}</p> <p> for : {e.amount}</p> <p> @{e.date}</p> <br/>
               </div>
-            })
+            }).reverse()
           }
         </div>
-        <input type="button" value="logout" onClick={() => fireAuth.signOut()}></input>
+        <div>
+          <input type="text" placeholder="name" value={Add} onChange={e => {setAdd(e.currentTarget.value)}}/>
+          <input type="button" value="Add!" onClick={addWallet}/>
+        </div>
+        <input type="button" value="logout" onClick={() => fireAuth.signOut()}/>
       </> 
     );
   }
