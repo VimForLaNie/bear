@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { fireAuth, fireStore } from 'utils/firebase';
+import { fireAuth } from 'utils/firebase';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
@@ -26,12 +26,11 @@ const Home: NextPage = (props) => {
   const [Rm, setRm] = useState(1);
   const [target, setTarget] = useState(0);
   const [tranfer, setTranfer] = useState(0);
-
-  const db = fireStore.collection('user');
   
   useEffect(() => {
    const set = async () => {
-     let temp:wallet[] = (await fireStore.collection('user').doc(String(Uid)).get()).data()?.wallets;
+     let temp:wallet[] = (await (await (fetch(`/api/get/${Uid}`))).json()).wallets;
+     if(!temp) return;
      let names = temp.map(({name},i) => {return name;});
      setData(temp);
      setNames(names);
@@ -58,10 +57,19 @@ const Home: NextPage = (props) => {
     t_data[Index].transactions.push(temp); 
 
     setData(t_data); 
-    db.doc(String(Uid)).update({
-      wallets : t_data,
-    }).then(() => console.log("yes"));
-
+    const res = (await fetch(`/api/post/${Uid}`, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'force-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(t_data) // body data type must match "Content-Type" header
+    }));
     setAmount(""); //reset
   }
 
@@ -72,24 +80,44 @@ const Home: NextPage = (props) => {
     t_data[Index].value -= (t_data[Index].transactions.splice(Rm - 1, 1))[0].amount;;
 
     setData(t_data);
-    db.doc(String(Uid)).update({
-      wallets : t_data,
-    }).then(() => console.log("yay"));
+    const res = (await fetch(`/api/post/${Uid}`, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'force-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(t_data) // body data type must match "Content-Type" header
+    }));
     
     setRm(1); //reset 
   }
 
-  const addWallet = () => {
+  const addWallet = async () => {
     let temp = data;
     temp.push({ name : Add,value : 0,transactions : [],});
-    db.doc(String(Uid)).update({
-      wallets : temp
-    }).then(() => {console.log("added")});
+    const res = (await fetch(`/api/post/${Uid}`, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'force-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(temp) // body data type must match "Content-Type" header
+    }));
 
     setData(temp);
   }
 
-  const Tranfer = () => {
+  const Tranfer = async () => {
     let t_data = data;
 
     t_data[Index].value -= tranfer;
@@ -102,9 +130,19 @@ const Home: NextPage = (props) => {
     t_data[newIndex].transactions.push(temp2);
 
     setData(t_data); 
-    db.doc(String(Uid)).update({
-      wallets : t_data,
-    }).then(() => console.log("tranfer"));
+    const res = (await fetch(`/api/post/${Uid}`, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'force-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(t_data) // body data type must match "Content-Type" header
+    }));
   }
 
   if(Auth && data.length){ 
