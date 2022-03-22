@@ -1,10 +1,8 @@
-// Import the functions you need from the SDKs you need
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDi_NUH440we0phFtuHg7xOJAAblp9ot1I",
   authDomain: "glowing-anagram-344508.firebaseapp.com",
@@ -15,7 +13,7 @@ const firebaseConfig = {
 };
 
 if(!firebase.apps.length){
-    firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 }
 
 const fireAuth = firebase.auth();

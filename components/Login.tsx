@@ -1,13 +1,15 @@
-import { useState, FC } from "react";
+import { useState } from "react";
 import { useRouter } from 'next/router';
+
 import { fireAuth } from 'utils/firebase';
 
-const Login:FC = () => {
+const Login = () => {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const router = useRouter();
 
     const login = () => {
+        
         fireAuth.signInWithEmailAndPassword(Email, Password)
         .then((userCredential) => {
             const user = userCredential.user;

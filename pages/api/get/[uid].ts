@@ -1,5 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { fireStore, fireAuth } from 'utils/firebase';
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+import { fireStore } from 'utils/firebase';
 
 const handler = async (req:NextApiRequest, res:NextApiResponse) => {
     const { uid } = req.query;
