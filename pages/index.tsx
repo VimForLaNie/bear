@@ -21,11 +21,11 @@ const Home: NextPage = (props) => {
   const [userAuth, setUserAuth] = useState(false);
   const [userUid, setUserUid] = useState("");
   const [userData, setUserData] = useState<wallet[]>([]);
-  const [updateAmount, setUpdateAmount] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [walletNames, setWalletNames] = useState<string[]>([""]);
-  const [newWalletName, setNewWalletName] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [removeIndex, setRemoveIndex] = useState(1);
+  const [newWalletName, setNewWalletName] = useState("");
+  const [updateAmount, setUpdateAmount] = useState(0);
   const [transferTarget, setTransferTarget] = useState(0);
   const [transferAmount, setTransferAmount] = useState(0);
   

@@ -1,0 +1,63 @@
+.login{
+    background-color: blanchedalmond;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 2em;
+    width: 100%;
+    height: fit-content;
+    max-width: 400px;
+    padding: 2em;
+}
+
+.input{
+    border-radius: 0.5em;
+    border: 2px solid lightblue;
+    margin: 0.5em;
+    width: 100%;
+    height: max(min(12vw,36px),18px);
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    transition: width 0.25s ease-out;
+    -webkit-transition: width 0.25s ease-out;
+    -moz-transition: width 0.25s ease-out;
+    -ms-transition: width 0.25s ease-out;
+    -o-transition: width 0.25s ease-out;
+}
+
+.input:focus{
+    border: 2px solid purple;
+    width: 120%;
+}
+
+.label{
+    font-size: max(min(12vw,36px),18px);
+}
+
+.button{
+    cursor: pointer;
+    background-color: grey;
+    border: none;
+    border-radius: 0.5em;
+    margin: 2em;
+    width: 75%;
+    height: max(min(14vw,42px),21px);
+    font-size: min(7vw,21px);
+    transition: background-color 0.125s ease-out;
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    -ms-border-radius: 0.5em;
+    -o-border-radius: 0.5em;
+    -webkit-transition: background-color 0.125s ease-out;
+    -moz-transition: background-color 0.125s ease-out;
+    -ms-transition: background-color 0.125s ease-out;
+    -o-transition: background-color 0.125s ease-out;
+}
+
+.button:hover{
+    background-color: aliceblue;
+}

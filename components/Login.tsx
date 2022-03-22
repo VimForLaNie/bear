@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from 'next/router';
 
 import { fireAuth } from 'utils/firebase';
+import styles from 'styles/components/Login.module.css'
 
 const Login = () => {
     const [Email, setEmail] = useState("");
@@ -24,10 +25,33 @@ const Login = () => {
         });
     }
     return (
-        <div className="login">
-            <input type="text" id="Email" value={Email} onChange={(e) => setEmail(e.currentTarget.value)}></input>
-            <input type="password" id="Password" value={Password} onChange={(e) => setPassword(e.currentTarget.value)}></input>
-            <input type="button" value="Login" onClick={login}></input>
+        <div className={styles.login}>
+            <label htmlFor="email" className={styles.label}>
+                Email
+            </label>
+            <input 
+                className={styles.input}
+                id="email"
+                type="text" 
+                value={Email} 
+                onChange={(e) => setEmail(e.currentTarget.value)}
+            />
+            <label htmlFor="password" className={styles.label}>
+                Password
+            </label>
+            <input 
+                className={styles.input}
+                id="password" 
+                type="password" 
+                value={Password} 
+                onChange={(e) => setPassword(e.currentTarget.value)}
+            />
+            <input 
+                className={styles.button}
+                type="button" 
+                value="Login" 
+                onClick={login}
+            />    
         </div> 
     )
 }
