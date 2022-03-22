@@ -3,21 +3,24 @@ import { useRouter } from 'next/router';
 
 import { fireAuth, fireStore } from 'utils/firebase';
 
-const reg = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
-
-const validPassword = (p:string) => {
-    return reg.test(p) ? 1 : 0;
-}
-
 const Register = () => {
     const [Email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
     const [cPassword, setCPassword] = useState("");
     const router = useRouter();
 
+    const validPassword = () => {
+        if(!/[a-z]/.test(Password)){ console.log("no lower cases"); return 0; }
+        if(!/[A-Z]/.test(Password)){ console.log("no upper cases"); return 0; }
+        if(!/\d/.test(Password)){ console.log("no numbers"); return 0; }
+        if(Password.length < 8){ console.log("less than 8 characters"); return 0; }
+    
+        return 1;
+    }
+
     const register = () => {
-        if(!validPassword(Password)){ return; } //should send errors
-        if(Password != cPassword){ return; }
+        if(!validPassword()){ console.log(Password); console.log("invalid password"); return; } //should send errors
+        if(Password != cPassword){ console.log("your password is not the same!"); return; }
 
         fireAuth.createUserWithEmailAndPassword(Email, Password)
         .then((userCredential) => {
