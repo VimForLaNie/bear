@@ -1,5 +1,6 @@
 html,
 body {
+  background-color: rgb(210, 219, 223);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,4 +20,80 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+select {
+
+  /* styling */
+  background-color: white;
+  border: thin solid var(--dark-blue);
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+
+  /* reset */
+
+  margin: 0;      
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select.minimal {
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--grey) 50%),
+    linear-gradient(135deg, var(--grey) 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+}
+
+select.minimal:focus {
+  background-image:
+    linear-gradient(45deg, var(--blue) 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, var(--blue) 50%),
+    linear-gradient(to right, var(--blue), var(--blue));
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+  background-repeat: no-repeat;
+  border-color: var(--blue);
+  outline: 0;
+}
+
+
+select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px var(--grey) inset !important;
+}
+
+:root{
+  --blue: #88ccf1ff;
+  --light-blue: #c1dff0ff;
+  --dark-blue: #3587a4ff;
+  --black: #031926ff;
+  --grey: #222725ff;
 }

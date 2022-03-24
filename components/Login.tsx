@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { fireAuth } from 'utils/firebase';
 import styles from 'styles/components/Login.module.css'
+import Link from "next/link";
 
 const Login = () => {
     const [Email, setEmail] = useState("");
@@ -33,7 +34,8 @@ const Login = () => {
                 className={styles.input}
                 id="email"
                 type="text" 
-                value={Email} 
+                value={Email}
+                placeholder="Email"
                 onChange={(e) => setEmail(e.currentTarget.value)}
             />
             <label htmlFor="password" className={styles.label}>
@@ -44,6 +46,7 @@ const Login = () => {
                 id="password" 
                 type="password" 
                 value={Password} 
+                placeholder="Password"
                 onChange={(e) => setPassword(e.currentTarget.value)}
             />
             <input 
@@ -51,7 +54,8 @@ const Login = () => {
                 type="button" 
                 value="Login" 
                 onClick={login}
-            />    
+            />
+            <Link href="/register">Register</Link>        
         </div> 
     )
 }

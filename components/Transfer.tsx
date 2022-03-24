@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 
 import Post from 'utils/post';
 import {userCtx, currIndexCtx, walletNamesCtx} from 'utils/Context';
+import styles from 'styles/components/Transfer.module.css'
 
 const Transfer = () => {
 
@@ -40,17 +41,19 @@ const Transfer = () => {
     }
 
     return(
-        <div>
-        <select name="to" id="to" value={transferTarget} onClick={e => setTransferTarget(parseInt(e.currentTarget.value))} onChange={e => setTransferTarget(parseInt(e.currentTarget.value))}>
+        <div className={styles.Transfer}>
+        <select name="to" id="to" className="minimal" value={transferTarget} onClick={e => setTransferTarget(parseInt(e.currentTarget.value))} onChange={e => setTransferTarget(parseInt(e.currentTarget.value))}>
             {walletNames?.map((e,i) => {
               if(i != currentIndex) return <option key={i} value={i}>{e}</option>
             })}
         </select>
         <input 
-            type="number" 
+            className={styles.input}
+            type="text" 
             value={transferAmount} 
             onChange={e => setTransferAmount(parseInt(e.currentTarget.value))}/>
         <input 
+            className={styles.button}
             type="button" 
             value="Tranfer" 
             onClick={Tranfer} 

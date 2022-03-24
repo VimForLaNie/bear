@@ -5,10 +5,7 @@ import Link from 'next/link';
 
 import { fireAuth } from 'utils/firebase';
 import { userCtx, currIndexCtx, walletNamesCtx } from 'utils/Context';
-import Add from 'components/addTransaction';
-import Remove from 'components/removeTransaction';
-import AddWallet from 'components/addWallet';
-import Transfer from 'components/Transfer';
+import Menu from 'components/Menu';
 
 const Home: NextPage = (props) => {
   const [userAuth, setUserAuth] = useState(false);
@@ -19,7 +16,7 @@ const Home: NextPage = (props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const userCtxValue = { userData, userUid, setUserData };
-  const currentIndexCtxValue = { currentIndex };
+  const currentIndexCtxValue = { currentIndex, setCurrentIndex };
   const walletNamesCtxValue = { walletNames };
   
   useEffect(() => {
@@ -52,17 +49,7 @@ const Home: NextPage = (props) => {
       <userCtx.Provider value={userCtxValue}>
       <currIndexCtx.Provider value={currentIndexCtxValue}>
       <walletNamesCtx.Provider value={walletNamesCtxValue}>
-        <div> 
-          <select name="name" id="name" onChange={e => setCurrentIndex(parseInt(e.currentTarget.value))}>
-            {walletNames?.map((e,i) => {
-              return <option key={i} value={i}>{e}</option>
-            })}
-          </select>
-        </div>
-        <Add></Add>
-        <Remove></Remove> 
-        <AddWallet></AddWallet>
-        <Transfer></Transfer>
+        <Menu></Menu>
         <h1>{walletNames[currentIndex]} : {userData[currentIndex]?.value}</h1>
         <div>
           {

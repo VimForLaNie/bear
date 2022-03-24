@@ -17,4 +17,9 @@ declare global {
         userUid : string,
         setUserData(data:wallet[]): void,
     }
+
+    interface currIndexContext {
+        currentIndex : number,
+        setCurrentIndex(number): void,
+    }
 }

@@ -2,6 +2,7 @@ import { createContext, useState, useContext } from 'react';
 
 import Post from 'utils/post';
 import {userCtx, currIndexCtx, walletNamesCtx} from 'utils/Context';
+import styles from 'styles/components/addTransaction.module.css';
 
 const AddTransaction = () => {
 
@@ -29,14 +30,16 @@ const AddTransaction = () => {
     }
 
     return (
-        <div>
+        <div className={styles.add}>
             <input 
-                type="number" 
+                type="text" 
                 placeholder="amount" 
+                className={styles.input}
                 value={updateAmount} 
                 onChange={e => setUpdateAmount(parseInt(e.currentTarget.value))}
             />
             <input 
+                className={styles.button}
                 type="button" 
                 value="Add" 
                 onClick={addTransaction}

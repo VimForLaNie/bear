@@ -6,8 +6,9 @@ const userCtx = createContext<userContext>({
     setUserData: () => {}
 });
 
-const currIndexCtx = createContext({
+const currIndexCtx = createContext<currIndexContext>({
     currentIndex: 0,
+    setCurrentIndex: () => {}
 });
 
 const walletNamesCtx = createContext<{walletNames : string[]}>({

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useRouter } from 'next/router';
 
 import { fireAuth, fireStore } from 'utils/firebase';
+import styles from 'styles/components/Register.module.css';
+import Link from "next/link";
 
 const Register = () => {
     const [Email, setEmail] = useState("");
@@ -42,11 +44,36 @@ const Register = () => {
         });
     }
     return (
-        <div className="register">
-            <input type="text" id="Email" value={Email} onChange={(e) => setEmail(e.currentTarget.value)}></input>
-            <input type="password" id="Password" value={Password} onChange={(e) => setPassword(e.currentTarget.value)}></input>
-            <input type="password" id="cPassword" value={cPassword} onChange={(e) => setCPassword(e.currentTarget.value)}></input>
-            <input type="button" value="Register" onClick={register}></input>
+        <div className={styles.register}>
+            <label htmlFor="Email" className={styles.label}>Email</label>
+            <input 
+                type="text" 
+                id="Email" 
+                value={Email} 
+                onChange={(e) => setEmail(e.currentTarget.value)} 
+                className={styles.input}
+                placeholder="Email"
+            />
+            <label htmlFor="Password" className={styles.label}>Password</label>
+            <input 
+                type="password" 
+                id="Password" 
+                value={Password} 
+                onChange={(e) => setPassword(e.currentTarget.value)} 
+                className={styles.input}
+                placeholder="Password"
+            />
+            <label htmlFor="cPassword" className={styles.label}>Confirm Password</label>
+            <input 
+                type="password" 
+                id="cPassword" 
+                value={cPassword} 
+                onChange={(e) => setCPassword(e.currentTarget.value)} 
+                className={styles.input}
+                placeholder="Confirm Password"
+            />
+            <input type="button" value="Register" onClick={register} className={styles.button}></input>
+            <Link href="/login">Login</Link>
         </div> 
     )
 }
