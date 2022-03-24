@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { fireAuth } from 'utils/firebase';
 import { userCtx, currIndexCtx, walletNamesCtx } from 'utils/Context';
 import Menu from 'components/Menu';
+import DisplayTransactions from 'components/displayTransaction';
 
 const Home: NextPage = (props) => {
   const [userAuth, setUserAuth] = useState(false);
@@ -51,15 +52,7 @@ const Home: NextPage = (props) => {
       <walletNamesCtx.Provider value={walletNamesCtxValue}>
         <Menu></Menu>
         <h1>{walletNames[currentIndex]} : {userData[currentIndex]?.value}</h1>
-        <div>
-          {
-            userData[currentIndex]?.transactions.map((e:transaction,i:number)=>{
-              return <div key={i}>
-                <p>from : {e.from}</p><p>to : {e.to}</p> <p> for : {e.amount}</p> <p> @{e.date}</p> <br/>
-              </div>
-            }).reverse()
-          }
-        </div>
+        <DisplayTransactions></DisplayTransactions>
         <input 
           type="button" 
           value="logout" 

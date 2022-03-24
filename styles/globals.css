@@ -1,12 +1,8 @@
 html,
 body {
-  background-color: rgb(210, 219, 223);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-  min-height: 100vh;
-  min-width: 100vw;
+  background-color: var(--white);
+  max-width: 100%;
+  overflow-x: hidden;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -91,6 +87,7 @@ input:-webkit-autofill:active{
 }
 
 :root{
+  --white : rgb(216, 222, 224);
   --blue: #88ccf1ff;
   --light-blue: #c1dff0ff;
   --dark-blue: #3587a4ff;

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 import { userCtx } from 'utils/Context';
 import Post from 'utils/post';
@@ -6,16 +6,22 @@ import styles from 'styles/components/addWallet.module.css';
 
 const AddWallet = () => {
     
-    const [ newWalletName, setNewWalletName ] = useState("");
+    const newWalletRef = useRef<HTMLInputElement>(null);
     const { userData, userUid, setUserData } = useContext(userCtx);
 
     const addWallet = async () => {
         let temp = userData;
+        const newWalletName = newWalletRef.current?.value || "";
+
+        if(newWalletName == "") { return; }
+
         temp.push({ name : newWalletName,value : 0,transactions : [],});
     
-        const res = (await Post(temp,userUid));
-    
         setUserData(temp);
+
+        const res = (await Post(temp,userUid));
+
+        if(newWalletRef.current) { newWalletRef.current.value = ""; } 
     }
 
     return (
@@ -24,12 +30,11 @@ const AddWallet = () => {
             className={styles.input}
             type="text" 
             placeholder="name" 
-            value={newWalletName} 
-            onChange={e => setNewWalletName(e.currentTarget.value)}
+            ref={newWalletRef}
         /> 
         <input 
             className={styles.button}
-            type="button" 
+            type="submit" 
             value="Add!" 
             onClick={addWallet}
         />

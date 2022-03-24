@@ -58,7 +58,7 @@
     background-color: var(--blue);
     border: none;
     border-radius: 0.5em;
-    margin: 2em;
+    margin: 1em;
     width: 75%;
     height: max(min(14vw,42px),21px);
     font-size: min(7vw,21px);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from 'next/router';
 
 import { fireAuth } from 'utils/firebase';
@@ -6,12 +6,14 @@ import styles from 'styles/components/Login.module.css'
 import Link from "next/link";
 
 const Login = () => {
-    const [Email, setEmail] = useState("");
-    const [Password, setPassword] = useState("");
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
     const login = () => {
-        
+        const Email = emailRef.current?.value || "";
+        const Password = passwordRef.current?.value || "";
+
         fireAuth.signInWithEmailAndPassword(Email, Password)
         .then((userCredential) => {
             const user = userCredential.user;
@@ -27,31 +29,23 @@ const Login = () => {
     }
     return (
         <div className={styles.login}>
-            <label htmlFor="email" className={styles.label}>
-                Email
-            </label>
             <input 
                 className={styles.input}
                 id="email"
                 type="text" 
-                value={Email}
+                ref={emailRef}
                 placeholder="Email"
-                onChange={(e) => setEmail(e.currentTarget.value)}
             />
-            <label htmlFor="password" className={styles.label}>
-                Password
-            </label>
             <input 
                 className={styles.input}
                 id="password" 
                 type="password" 
-                value={Password} 
+                ref={passwordRef}
                 placeholder="Password"
-                onChange={(e) => setPassword(e.currentTarget.value)}
             />
             <input 
                 className={styles.button}
-                type="button" 
+                type="submit" 
                 value="Login" 
                 onClick={login}
             />
