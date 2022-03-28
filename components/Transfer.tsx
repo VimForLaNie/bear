@@ -1,50 +1,48 @@
 import { useContext, useState } from 'react';
 
 import Post from 'utils/post';
-import {userCtx, currIndexCtx, walletNamesCtx} from 'utils/Context';
+import {Ctx} from 'utils/Context';
 import styles from 'styles/components/Transfer.module.css'
 
 const Transfer = () => {
 
-    const { userData, userUid, setUserData } = useContext(userCtx);
-    const { currentIndex } = useContext(currIndexCtx);
-    const { walletNames } = useContext(walletNamesCtx);
+    const { walletNames, currIndex, wallets, uid, setWallets } = useContext(Ctx);
     const [transferTarget, setTransferTarget] = useState(0);
     const [transferAmount, setTransferAmount] = useState(0);
 
     const Tranfer = async () => {
-        let t_data = userData;
+        let t_data = wallets;
     
-        t_data[currentIndex].value -= transferAmount;
+        t_data[currIndex].value -= transferAmount;
 
         let temp1:transaction = { 
-            from : walletNames[currentIndex], 
+            from : walletNames[currIndex], 
             to : walletNames[transferTarget], 
             amount : -transferAmount, 
             date: String(new Date()) 
         };
-        t_data[currentIndex].transactions.push(temp1);
+        t_data[currIndex].transactions.push(temp1);
     
         let newIndex = transferTarget;
         t_data[newIndex].value += transferAmount;
         let temp2:transaction = { 
-            from : walletNames[currentIndex], 
+            from : walletNames[currIndex], 
             to : walletNames[transferTarget], 
             amount : transferAmount, 
             date: String(new Date()) 
         };
         t_data[newIndex].transactions.push(temp2);
     
-        const res = (await Post(t_data,userUid));
+        const res = (await Post(t_data,uid));
     
-        setUserData(t_data); 
+        setWallets(t_data); 
     }
 
     return(
         <div className={styles.Transfer}>
         <select name="to" id="to" className="minimal" value={transferTarget} onClick={e => setTransferTarget(parseInt(e.currentTarget.value))} onChange={e => setTransferTarget(parseInt(e.currentTarget.value))}>
             {walletNames?.map((e,i) => {
-              if(i != currentIndex) return <option key={i} value={i}>{e}</option>
+              if(i != currIndex) return <option key={i} value={i}>{e}</option>
             })}
         </select>
         <input 

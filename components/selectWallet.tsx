@@ -1,17 +1,19 @@
-import { useContext } from "react";
-import { currIndexCtx, walletNamesCtx } from "utils/Context";
+import { useContext, useRef } from "react";
+import { Ctx } from "utils/Context";
 
 const SetWallet = () => {
-    
-    const { setCurrentIndex } = useContext(currIndexCtx);
-    const { walletNames } = useContext(walletNamesCtx);
+    const { setCurrIndex, walletNames } = useContext(Ctx);
     
     return (
         <div>
-            <select name="name" id="name" onChange={e => setCurrentIndex(parseInt(e.currentTarget.value))} className="minimal">
-            {walletNames?.map((e,i) => {
-              return <option key={i} value={i}>{e}</option>
-            })}
+            <select 
+                name="name" 
+                id="name" 
+                onChange={(e) => {setCurrIndex(parseInt(e.currentTarget.value))}} 
+                className="minimal">
+                    {walletNames?.map((e,i) => {
+                    return <option key={i} value={i}>{e}</option>
+                    })}
             </select>
         </div>
         

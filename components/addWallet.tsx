@@ -1,25 +1,25 @@
 import { useContext, useRef, useState } from 'react';
 
-import { userCtx } from 'utils/Context';
+import { Ctx } from 'utils/Context';
 import Post from 'utils/post';
 import styles from 'styles/components/addWallet.module.css';
 
 const AddWallet = () => {
     
     const newWalletRef = useRef<HTMLInputElement>(null);
-    const { userData, userUid, setUserData } = useContext(userCtx);
+    const { wallets, setWallets, uid } = useContext(Ctx);
 
     const addWallet = async () => {
-        let temp = userData;
+        let temp = wallets;
         const newWalletName = newWalletRef.current?.value || "";
 
         if(newWalletName == "") { return; }
 
         temp.push({ name : newWalletName,value : 0,transactions : [],});
     
-        setUserData(temp);
+        setWallets(temp);
 
-        const res = (await Post(temp,userUid));
+        const res = (await Post(temp,uid));
 
         if(newWalletRef.current) { newWalletRef.current.value = ""; } 
     }

@@ -12,14 +12,13 @@ declare global {
         value : number,
         transactions : transaction[],
     }
-    interface userContext {
-        userData : wallet[],
-        userUid : string,
-        setUserData(data:wallet[]): void,
-    }
+    interface Ctx {
+        wallets : wallet[],
+        uid : string,
+        currIndex : number,
+        walletNames : string[],
 
-    interface currIndexContext {
-        currentIndex : number,
-        setCurrentIndex(number): void,
+        setWallets(data:wallet[]) : void,
+        setCurrIndex(newIndex:number) : void,
     }
 }

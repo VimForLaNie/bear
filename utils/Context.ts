@@ -1,18 +1,12 @@
 import { createContext } from 'react';
 
-const userCtx = createContext<userContext>({
-    userData: [],
-    userUid: "",
-    setUserData: () => {}
-});
-
-const currIndexCtx = createContext<currIndexContext>({
-    currentIndex: 0,
-    setCurrentIndex: () => {}
-});
-
-const walletNamesCtx = createContext<{walletNames : string[]}>({
+const Ctx = createContext<Ctx>({
+    wallets : [],
     walletNames : [],
-});
+    uid : "",
+    currIndex : 0,
+    setWallets : () => {},
+    setCurrIndex : () => {},
+})
 
-export {userCtx, currIndexCtx, walletNamesCtx};
+export {Ctx};
