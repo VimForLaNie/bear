@@ -1,9 +1,11 @@
 import { useContext, useRef } from 'react';
+import moment from 'moment';
 
 import Post from 'utils/post';
 import { Ctx } from 'utils/Context';
 import styles from 'styles/components/addTransaction.module.css';
 import hashCode from 'utils/hash';
+
 
 const AddTransaction = () => {
 
@@ -21,7 +23,7 @@ const AddTransaction = () => {
             from : "thin air", 
             to : walletNames[currIndex], 
             amount : updateAmount, 
-            date: String(new Date()) 
+            date: moment().unix() 
         };
         t_data.transactions.push(temp); 
 

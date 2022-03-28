@@ -39,7 +39,7 @@ const Home: NextPage = (props) => {
     if(userUid) set().then(data => {
       setWallets(data);
       setWalletNames(data.map(({name},i) => {return name;}));
-      setCurrWallet(data[currIndex]);
+      setCurrWallet(data[0]);
     });
    },[userUid]);
 

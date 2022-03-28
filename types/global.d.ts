@@ -7,7 +7,7 @@ declare global {
         from : string,
         to : string,
         amount : number,
-        date : string,
+        date : number,
     }
     interface wallet {
         name : string,

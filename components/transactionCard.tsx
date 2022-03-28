@@ -1,3 +1,4 @@
+import moment from "moment";
 import { FC } from "react";
 import styles from 'styles/components/Card.module.css';
 
@@ -8,7 +9,7 @@ const Card:FC<transaction> = (props) => {
             <p>from : {props.from}</p>
             <p>to : {props.to}</p> 
             <p>for : {props.amount}</p> 
-            <p>@{props.date}</p>
+            <p>@{moment(props.date).toString()}</p>
         </div>
     );
 }

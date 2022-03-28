@@ -4,6 +4,7 @@ import Post from 'utils/post';
 import {Ctx} from 'utils/Context';
 import styles from 'styles/components/Transfer.module.css'
 import hashCode from 'utils/hash';
+import moment from 'moment';
 
 const Transfer = () => {
 
@@ -23,7 +24,7 @@ const Transfer = () => {
             from : walletNames[currIndex], 
             to : walletNames[transferTarget], 
             amount : -transferAmount, 
-            date: String(new Date()) 
+            date: moment().unix()
         };
         temp.transactions.push(temp1);
 
@@ -38,7 +39,7 @@ const Transfer = () => {
             from : walletNames[currIndex], 
             to : walletNames[transferTarget], 
             amount : transferAmount, 
-            date: String(new Date()) 
+            date: moment().unix() 
         };
         target.transactions.push(temp2);
         
