@@ -9,6 +9,7 @@ const Ctx = createContext<Ctx>({
     setWallets : () => {},
     setCurrIndex : () => {},
     setCurrWallet : () => {},
+    setWalletNames : () => {},
 })
 
 export {Ctx};

@@ -24,5 +24,6 @@ declare global {
         setWallets : Dispatch<SetStateAction<wallet[]>>,
         setCurrIndex : Dispatch<SetStateAction<number>>,
         setCurrWallet : Dispatch<SetStateAction<wallet>>,
+        setWalletNames : Dispatch<SetStateAction<string[]>>,
     }
 }

@@ -66,6 +66,7 @@ const Home: NextPage = (props) => {
           setCurrIndex : setCurrIndex,
           setWallets : setWallets,
           setCurrWallet : setCurrWallet,
+          setWalletNames : setWalletNames,
         }}>
           <Menu></Menu>
           <h1>{walletNames[currIndex]} : {wallets[currIndex]?.value}</h1>
