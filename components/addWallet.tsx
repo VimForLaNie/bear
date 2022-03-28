@@ -3,6 +3,7 @@ import { useContext, useRef, useState } from 'react';
 import { Ctx } from 'utils/Context';
 import Post from 'utils/post';
 import styles from 'styles/components/addWallet.module.css';
+import hashCode from 'utils/hash';
 
 const AddWallet = () => {
     const newWalletRef = useRef<HTMLInputElement>(null);
@@ -19,6 +20,7 @@ const AddWallet = () => {
         setWallets(temp);
 
         const res = (await Post(temp,uid));
+        window.localStorage.setItem(`data:${hashCode(uid)}`,JSON.stringify(temp));
 
         if(newWalletRef.current) { newWalletRef.current.value = ""; } 
     }

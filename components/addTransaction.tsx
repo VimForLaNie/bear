@@ -3,6 +3,7 @@ import { useContext, useRef } from 'react';
 import Post from 'utils/post';
 import { Ctx } from 'utils/Context';
 import styles from 'styles/components/addTransaction.module.css';
+import hashCode from 'utils/hash';
 
 const AddTransaction = () => {
 
@@ -26,7 +27,7 @@ const AddTransaction = () => {
 
         setCurrWallet(t_data);
         setWallets([...wallets.slice(0,currIndex), t_data, ...wallets.slice(currIndex+1,wallets.length)]); 
-        
+        window.localStorage.setItem(`data:${hashCode(uid)}`,JSON.stringify(wallets));
         const res = (await Post(wallets,uid));
     
         if(updateAmountRef.current) { updateAmountRef.current.value = ""; }

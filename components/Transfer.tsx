@@ -3,10 +3,11 @@ import { useContext, useRef } from 'react';
 import Post from 'utils/post';
 import {Ctx} from 'utils/Context';
 import styles from 'styles/components/Transfer.module.css'
+import hashCode from 'utils/hash';
 
 const Transfer = () => {
 
-    const { walletNames, currIndex, wallets, uid, setWallets } = useContext(Ctx);
+    const { walletNames, currIndex, wallets, uid, setWallets, currWallet, setCurrWallet } = useContext(Ctx);
     const transferTargetRef = useRef<HTMLSelectElement>(null);
     const transferAmountRef = useRef<HTMLInputElement>(null);
 
@@ -14,9 +15,9 @@ const Transfer = () => {
         if (transferAmountRef.current === null || transferTargetRef.current === null) { return }
         const transferAmount = parseInt(transferAmountRef.current.value);
         const transferTarget = parseInt(transferTargetRef.current.value);
-        let t_data = wallets;
+        let temp = currWallet;
     
-        t_data[currIndex].value -= transferAmount;
+        temp.value -= transferAmount;
 
         let temp1:transaction = { 
             from : walletNames[currIndex], 
@@ -24,21 +25,29 @@ const Transfer = () => {
             amount : -transferAmount, 
             date: String(new Date()) 
         };
-        t_data[currIndex].transactions.push(temp1);
+        temp.transactions.push(temp1);
+
+        setCurrWallet(temp);
+        setWallets([...wallets.slice(0,currIndex), temp, ...wallets.slice(currIndex +1,wallets.length)]);
     
-        let newIndex = transferTarget;
-        t_data[newIndex].value += transferAmount;
+        let target = wallets[transferTarget];
+
+        target.value += transferAmount;
+        
         let temp2:transaction = { 
             from : walletNames[currIndex], 
             to : walletNames[transferTarget], 
             amount : transferAmount, 
             date: String(new Date()) 
         };
-        t_data[newIndex].transactions.push(temp2);
+        target.transactions.push(temp2);
+        
+        setWallets([...wallets.slice(0,transferTarget), target, ...wallets.slice(transferTarget +1,wallets.length)]); 
+
+        const res = (await Post(wallets,uid));
+        window.localStorage.setItem(`data:${hashCode(uid)}`,JSON.stringify(wallets));
     
-        const res = (await Post(t_data,uid));
-    
-        setWallets(t_data); 
+        transferAmountRef.current.value = "";
     }
 
     return(
