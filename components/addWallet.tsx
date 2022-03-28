@@ -5,7 +5,6 @@ import Post from 'utils/post';
 import styles from 'styles/components/addWallet.module.css';
 
 const AddWallet = () => {
-    
     const newWalletRef = useRef<HTMLInputElement>(null);
     const { wallets, setWallets, uid } = useContext(Ctx);
 

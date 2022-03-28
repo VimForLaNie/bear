@@ -14,30 +14,33 @@ const Home: NextPage = (props) => {
   const [userUid, setUserUid] = useState("");
 
   const [wallets, setWallets] = useState<wallet[]>([]);
-  const [walletNames, setWalletNames] = useState<string[]>([""]);
   const [currIndex, setCurrIndex] = useState(0);
+  const [currWallet, setCurrWallet] = useState<wallet>({name : "",value : 0, transactions : []});
+  const [walletNames, setWalletNames] = useState<string[]>([""]);
+  
 
   useEffect(() => {
     const set = async () => {
       console.log("useEffect!");
+      let data:wallet[];
       const cache = window.localStorage.getItem(`data:${hashCode(userUid)}`);
       if(cache === null) {
-        let temp:wallet[] = (await (await (fetch(`/api/get/${userUid}`))).json()).wallets;
-        let names = temp.map(({name},i) => {return name;});
-        window.localStorage.setItem(`data:${hashCode(userUid)}`, JSON.stringify(temp));
-        setWallets(temp);
-        setWalletNames(names);
+        data = (await (await (fetch(`/api/get/${userUid}`))).json()).wallets;
+        window.localStorage.setItem(`data:${hashCode(userUid)}`, JSON.stringify(data));
         console.log("caching");
       }
       else{
-        let data:wallet[] = JSON.parse(cache);
-        setWallets(data);
-        setWalletNames(data.map(({name},i) => { return name;}));
+        data = JSON.parse(cache);
         console.log("use caches");
       }
+      return data;
     }
     
-    if(userUid) set();
+    if(userUid) set().then(data => {
+      setWallets(data);
+      setWalletNames(data.map(({name},i) => {return name;}));
+      setCurrWallet(data[currIndex]);
+    });
    },[userUid]);
 
   fireAuth.onAuthStateChanged((user) => {
@@ -56,11 +59,13 @@ const Home: NextPage = (props) => {
       <>
         <Ctx.Provider value={{
           wallets : wallets,
+          currWallet : currWallet,
           walletNames : walletNames,
           currIndex : currIndex,
           uid : userUid,
           setCurrIndex : setCurrIndex,
           setWallets : setWallets,
+          setCurrWallet : setCurrWallet,
         }}>
           <Menu></Menu>
           <h1>{walletNames[currIndex]} : {wallets[currIndex]?.value}</h1>

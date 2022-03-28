@@ -7,26 +7,27 @@ import styles from 'styles/components/addTransaction.module.css';
 const AddTransaction = () => {
 
     const updateAmountRef = useRef<HTMLInputElement>(null);
-    const { wallets, currIndex, walletNames, setWallets, uid } = useContext(Ctx);
+    const { wallets, currIndex, walletNames, currWallet, setWallets, uid, setCurrWallet } = useContext(Ctx);
 
     const addTransaction = async () => {
-        let t_data = wallets;
+        let t_data = currWallet;
         const updateAmount = parseInt(updateAmountRef.current?.value || "");
 
         if(updateAmount == NaN) { return; } // TODO : Send error
     
-        t_data[currIndex].value += updateAmount;
+        t_data.value += updateAmount;
         let temp:transaction = { 
             from : "thin air", 
             to : walletNames[currIndex], 
             amount : updateAmount, 
             date: String(new Date()) 
         };
-        t_data[currIndex].transactions.push(temp); 
-    
-        setWallets(t_data); 
+        t_data.transactions.push(temp); 
+
+        setCurrWallet(t_data);
+        setWallets([...wallets.slice(0,currIndex), t_data, ...wallets.slice(currIndex+1,wallets.length)]); 
         
-        const res = (await Post(t_data,uid));
+        const res = (await Post(wallets,uid));
     
         if(updateAmountRef.current) { updateAmountRef.current.value = ""; }
     }

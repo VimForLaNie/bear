@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useRef } from 'react';
 
 import Post from 'utils/post';
 import {Ctx} from 'utils/Context';
@@ -7,10 +7,13 @@ import styles from 'styles/components/Transfer.module.css'
 const Transfer = () => {
 
     const { walletNames, currIndex, wallets, uid, setWallets } = useContext(Ctx);
-    const [transferTarget, setTransferTarget] = useState(0);
-    const [transferAmount, setTransferAmount] = useState(0);
+    const transferTargetRef = useRef<HTMLSelectElement>(null);
+    const transferAmountRef = useRef<HTMLInputElement>(null);
 
     const Tranfer = async () => {
+        if (transferAmountRef.current === null || transferTargetRef.current === null) { return }
+        const transferAmount = parseInt(transferAmountRef.current.value);
+        const transferTarget = parseInt(transferTargetRef.current.value);
         let t_data = wallets;
     
         t_data[currIndex].value -= transferAmount;
@@ -40,7 +43,7 @@ const Transfer = () => {
 
     return(
         <div className={styles.Transfer}>
-        <select name="to" id="to" className="minimal" value={transferTarget} onClick={e => setTransferTarget(parseInt(e.currentTarget.value))} onChange={e => setTransferTarget(parseInt(e.currentTarget.value))}>
+        <select name="to" id="to" className="minimal" ref={transferTargetRef}>
             {walletNames?.map((e,i) => {
               if(i != currIndex) return <option key={i} value={i}>{e}</option>
             })}
@@ -48,8 +51,8 @@ const Transfer = () => {
         <input 
             className={styles.input}
             type="text" 
-            value={transferAmount} 
-            onChange={e => setTransferAmount(parseInt(e.currentTarget.value))}/>
+            ref={transferAmountRef}
+        />
         <input 
             className={styles.button}
             type="button" 

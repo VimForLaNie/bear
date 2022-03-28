@@ -5,12 +5,12 @@ import Card from './transactionCard';
 
 const DisplayTransactions = () => {
     
-    const { wallets, currIndex } = useContext(Ctx);
+    const { currWallet } = useContext(Ctx);
 
     return (
         <div className={styles.display}>
           {
-            wallets[currIndex]?.transactions.map((e:transaction,i:number)=>{
+            currWallet?.transactions.map((e:transaction,i:number)=>{
               return <Card key={i} from={e.from} to={e.to} amount={e.amount} date={e.date}></Card>
             }).reverse()
           }

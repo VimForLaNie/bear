@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export {};
 
 declare global {
@@ -14,11 +16,13 @@ declare global {
     }
     interface Ctx {
         wallets : wallet[],
+        currWallet : wallet,
         uid : string,
         currIndex : number,
         walletNames : string[],
 
-        setWallets(data:wallet[]) : void,
-        setCurrIndex(newIndex:number) : void,
+        setWallets : Dispatch<SetStateAction<wallet[]>>,
+        setCurrIndex : Dispatch<SetStateAction<number>>,
+        setCurrWallet : Dispatch<SetStateAction<wallet>>,
     }
 }
