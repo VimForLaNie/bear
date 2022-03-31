@@ -8,6 +8,8 @@ import { fireAuth } from 'utils/firebase';
 import { Ctx } from 'utils/Context';
 import Menu from 'components/Menu';
 import DisplayTransactions from 'components/displayTransaction';
+import DisplayValue from 'components/displayValue';
+import Logout from 'components/Logout';
 
 const Home: NextPage = (props) => {
   const [userAuth, setUserAuth] = useState(false);
@@ -56,7 +58,7 @@ const Home: NextPage = (props) => {
 
   if(userAuth && wallets.length){ 
     return ( 
-      <>
+      <div className="flex flex-col">
         <Ctx.Provider value={{
           wallets : wallets,
           currWallet : currWallet,
@@ -69,15 +71,11 @@ const Home: NextPage = (props) => {
           setWalletNames : setWalletNames,
         }}>
           <Menu></Menu>
-          <h1>{walletNames[currIndex]} : {wallets[currIndex]?.value}</h1>
+          <DisplayValue></DisplayValue>
           <DisplayTransactions></DisplayTransactions>
-          <input 
-            type="button" 
-            value="logout" 
-            onClick={() => fireAuth.signOut()}
-          />
+          <Logout></Logout>
         </Ctx.Provider>
-      </> 
+      </div> 
     );
   }
   else {

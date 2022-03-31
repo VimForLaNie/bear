@@ -49,29 +49,34 @@ const Register = () => {
         });
     }
     return (
-        <div className={styles.register}>
+        <div className='flex flex-col self-center items-center bg-blue-300 w-80 p-4 rounded-lg'>
             <input 
                 type="text" 
                 id="Email" 
                 ref={emaillRef}
-                className={styles.input}
+                className="inputField"
                 placeholder="Email"
             />
             <input 
                 type="password" 
                 id="Password" 
                 ref={passwordRef}
-                className={styles.input}
+                className="inputField"
                 placeholder="Password"
             />
             <input 
                 type="password" 
                 id="cPassword" 
                 ref={cPasswordRef}
-                className={styles.input}
+                className="inputField"
                 placeholder="Confirm Password"
             />
-            <input type="button" value="Register" onClick={register} className={styles.button}></input>
+            <input 
+                type="button" 
+                value="Register" 
+                onClick={register} 
+                className="mdBtn hover-lightup"
+            />
             <Link href="/login">Login</Link>
         </div> 
     )

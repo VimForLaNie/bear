@@ -4,7 +4,10 @@ import Register from 'components/Register';
 
 const page:NextPage = () => {
     return (
-        <Register></Register>
+        <div className="flex flex-col">
+            <Register></Register>
+        </div>
+        
     )
 }
 

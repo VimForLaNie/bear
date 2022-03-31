@@ -4,7 +4,10 @@ import Login from 'components/Login';
 
 const page:NextPage = () => {
     return (
-        <Login></Login>
+        <div className="flex flex-col">
+            <Login></Login>
+        </div>
+        
     )
 }
 

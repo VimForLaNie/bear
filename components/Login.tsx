@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { useRouter } from 'next/router';
 
 import { fireAuth } from 'utils/firebase';
-import styles from 'styles/components/Login.module.css'
 import Link from "next/link";
 
 const Login = () => {
@@ -28,23 +27,23 @@ const Login = () => {
         });
     }
     return (
-        <div className={styles.login}>
+        <div className="flex flex-col self-center items-center bg-blue-300 w-80 p-4 rounded-lg">
             <input 
-                className={styles.input}
+                className="inputField"
                 id="email"
                 type="text" 
                 ref={emailRef}
                 placeholder="Email"
             />
             <input 
-                className={styles.input}
+                className="inputField"
                 id="password" 
                 type="password" 
                 ref={passwordRef}
                 placeholder="Password"
             />
             <input 
-                className={styles.button}
+                className="mdBtn hover-lightup"
                 type="submit" 
                 value="Login" 
                 onClick={login}

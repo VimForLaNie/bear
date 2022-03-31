@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   background-color: var(--white);
@@ -18,8 +22,27 @@ a {
   box-sizing: border-box;
 }
 
-select {
+.inputField{
+  @apply w-64 rounded-lg p-2 m-2 text-slate-50 transition-all bg-slate-900
+}
 
+.inputField:focus{
+  @apply w-72
+}
+
+.mdBtn{
+    @apply w-32 h-16 p-4 m-2 bg-blue-700 text-slate-50 rounded-xl self-center;
+}
+
+.hover-float:hover {
+  @apply translate-x-1 -translate-y-1 shadow-xl bg-opacity-80
+}
+
+.hover-lightup:hover {
+  @apply bg-opacity-80
+}
+
+select {
   /* styling */
   background-color: white;
   border: thin solid var(--dark-blue);
@@ -30,7 +53,6 @@ select {
   padding: 0.5em 3.5em 0.5em 1em;
 
   /* reset */
-
   margin: 0;      
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -83,7 +105,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px var(--grey) inset !important;
+    -webkit-box-shadow: 0 0 0 30px rgb(15,23,42) inset !important;
 }
 
 :root{
