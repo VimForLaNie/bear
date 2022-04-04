@@ -7,14 +7,14 @@ import styles from 'styles/components/addTransaction.module.css';
 import hashCode from 'utils/hash';
 
 
-const AddTransaction = () => {
-
+const AddTransaction = (props:{mode : boolean}) => {
+    const postive = props.mode ? 1 : -1;
     const updateAmountRef = useRef<HTMLInputElement>(null);
     const { wallets, currIndex, walletNames, currWallet, setWallets, uid, setCurrWallet } = useContext(Ctx);
 
     const addTransaction = async () => {
         let t_data = currWallet;
-        const updateAmount = parseInt(updateAmountRef.current?.value || "");
+        const updateAmount = postive*Math.abs(parseInt(updateAmountRef.current?.value || ""));
 
         if(updateAmount == NaN) { return; } // TODO : Send error
     
@@ -36,15 +36,16 @@ const AddTransaction = () => {
     }
 
     return (
-        <div className={styles.add}>
+        <div className="flex flex-row">
             <input 
                 type="text" 
                 placeholder="amount" 
-                className={styles.input}
+                className="inputField"
                 ref={updateAmountRef}
+                style={{color : props.mode ? "green" : "red"}}
             />
             <input 
-                className={styles.button}
+                className="smBtn"
                 type="submit" 
                 value="Add" 
                 onClick={addTransaction}

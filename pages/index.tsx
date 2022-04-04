@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import hashCode from 'utils/hash';
 
@@ -10,6 +10,8 @@ import Menu from 'components/Menu';
 import DisplayTransactions from 'components/displayTransaction';
 import DisplayValue from 'components/displayValue';
 import Logout from 'components/Logout';
+import AddButton from 'components/addButton';
+import TransactionModal from 'components/transactionModal';
 
 const Home: NextPage = (props) => {
   const [userAuth, setUserAuth] = useState(false);
@@ -73,6 +75,8 @@ const Home: NextPage = (props) => {
           <Menu></Menu>
           <DisplayValue></DisplayValue>
           <DisplayTransactions></DisplayTransactions>
+          <TransactionModal></TransactionModal>
+          <AddButton></AddButton>
           <Logout></Logout>
         </Ctx.Provider>
       </div> 
