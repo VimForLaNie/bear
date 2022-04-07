@@ -3,7 +3,6 @@ import moment from 'moment';
 
 import Post from 'utils/post';
 import { Ctx } from 'utils/Context';
-import styles from 'styles/components/addTransaction.module.css';
 import hashCode from 'utils/hash';
 
 

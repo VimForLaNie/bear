@@ -1,8 +1,7 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useRef } from 'react';
 
 import { Ctx } from 'utils/Context';
 import Post from 'utils/post';
-import styles from 'styles/components/addWallet.module.css';
 import hashCode from 'utils/hash';
 
 const AddWallet = () => {

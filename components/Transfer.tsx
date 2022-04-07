@@ -2,7 +2,6 @@ import { useContext, useRef } from 'react';
 
 import Post from 'utils/post';
 import {Ctx} from 'utils/Context';
-import styles from 'styles/components/Transfer.module.css'
 import hashCode from 'utils/hash';
 import moment from 'moment';
 

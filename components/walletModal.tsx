@@ -6,6 +6,7 @@ const WalletModal = () => {
     const closeModal = () => {
         if(ModalRef == null) return;
         console.log("close");
+        // @ts-ignore
         ModalRef.close();
     }
 

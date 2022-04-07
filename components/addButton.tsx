@@ -11,14 +11,17 @@ const AddButton = () => {
         switch(index){
             case 1:
                 if(transactionModalRef == null) return;
+                // @ts-ignore
                 transactionModalRef.showModal();
                 break;
             case 2:
                 if(walletModalRef == null) return;
+                // @ts-ignore
                 walletModalRef.showModal();
                 break;
             case 3:
                 if(transferModalRef == null) return;
+                // @ts-ignore
                 transferModalRef.showModal();
                 break;
             default:

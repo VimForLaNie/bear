@@ -1,8 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useRouter } from 'next/router';
 
 import { fireAuth, fireStore } from 'utils/firebase';
-import styles from 'styles/components/Register.module.css';
 import Link from "next/link";
 
 const Register = () => {
