@@ -24,15 +24,15 @@ const AddWallet = () => {
     }
 
     return (
-        <div className={styles.addWallet}>
+        <div className="flex flex-row">
         <input 
-            className={styles.input}
+            className="inputField"
             type="text" 
             placeholder="name" 
             ref={newWalletRef}
         /> 
         <input 
-            className={styles.button}
+            className="smBtn"
             type="submit" 
             value="Add!" 
             onClick={addWallet}

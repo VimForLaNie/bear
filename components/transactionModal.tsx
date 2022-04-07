@@ -1,10 +1,12 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import { Ctx } from "utils/Context";
 import AddTransaction from "./addTransaction";
 
 const TransactionModal = () => {
-    const ModalRef = document.querySelector('#modal');
+    const ModalRef = document.querySelector('#tran-modal');
     const checkBoxRef = useRef<HTMLInputElement>(null);
     const [Postive, setPostive] = useState(true);
+    const {currWallet} = useContext(Ctx);
 
     const closeModal = () => {
         if(ModalRef == null) return;
@@ -13,7 +15,8 @@ const TransactionModal = () => {
     }
 
     return (
-        <dialog id="modal" className="max-w-fit h-32">
+        <dialog id="tran-modal" className="">
+            <h1 className=" text-xl">{currWallet.name}</h1>
             <button className=" absolute top-0 right-0 p-2 m-1" onClick={closeModal}><span data-text="X"></span></button>
             <div className="m-2 p-2 bg-slate-300 flex flex-row">
                 <label className="switch">

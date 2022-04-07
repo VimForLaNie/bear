@@ -52,19 +52,19 @@ const Transfer = () => {
     }
 
     return(
-        <div className={styles.Transfer}>
+        <div className="flex flex-row p-4">
         <select name="to" id="to" className="minimal" ref={transferTargetRef}>
             {walletNames?.map((e,i) => {
               if(i != currIndex) return <option key={i} value={i}>{e}</option>
             })}
         </select>
         <input 
-            className={styles.input}
+            className="inputField"
             type="text" 
             ref={transferAmountRef}
         />
         <input 
-            className={styles.button}
+            className="smBtn"
             type="button" 
             value="Tranfer" 
             onClick={Tranfer} 

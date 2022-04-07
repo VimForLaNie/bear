@@ -6,12 +6,14 @@ import hashCode from 'utils/hash';
 
 import { fireAuth } from 'utils/firebase';
 import { Ctx } from 'utils/Context';
-import Menu from 'components/Menu';
 import DisplayTransactions from 'components/displayTransaction';
 import DisplayValue from 'components/displayValue';
 import Logout from 'components/Logout';
 import AddButton from 'components/addButton';
 import TransactionModal from 'components/transactionModal';
+import WalletModal from 'components/walletModal';
+import TransferModal from 'components/transferModal';
+import SelectWallet from 'components/selectWallet';
 
 const Home: NextPage = (props) => {
   const [userAuth, setUserAuth] = useState(false);
@@ -72,10 +74,12 @@ const Home: NextPage = (props) => {
           setCurrWallet : setCurrWallet,
           setWalletNames : setWalletNames,
         }}>
-          <Menu></Menu>
+          <SelectWallet></SelectWallet>
           <DisplayValue></DisplayValue>
           <DisplayTransactions></DisplayTransactions>
           <TransactionModal></TransactionModal>
+          <WalletModal></WalletModal>
+          <TransferModal></TransferModal>
           <AddButton></AddButton>
           <Logout></Logout>
         </Ctx.Provider>

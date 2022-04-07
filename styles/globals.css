@@ -31,11 +31,11 @@ a {
 }
 
 .smBtn {
-    @apply w-24 p-4 bg-blue-700 text-slate-50 rounded-xl self-center;
+    @apply w-24 p-4 bg-blue-700 text-slate-50 rounded-xl self-center cursor-pointer;
 }
 
 .mdBtn{
-    @apply w-32 h-16 p-4 m-2 bg-blue-700 text-slate-50 rounded-xl self-center;
+    @apply w-32 h-16 p-4 m-2 bg-blue-700 text-slate-50 rounded-xl self-center cursor-pointer;
 }
 
 .hover-float:hover {
