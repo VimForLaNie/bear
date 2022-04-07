@@ -1,5 +1,16 @@
 {
   "compilerOptions": {
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "baseUrl": ".",
+    "paths": {
+      "components": ["/components"],
+      "pages" : ["/pages"],
+      "api" : ["/api"],
+      "public" : ["/public"],
+      "styles" : ["/style"],
+      "utils" : ["/utils"]
+    },
+    "rootDir": ".",
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
